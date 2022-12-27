@@ -77,7 +77,7 @@ class ExperiaBoxV10ADeviceScanner(DeviceScanner):
         """Initialize the scanner."""
         host = config[CONF_HOST]
         username, password = config[CONF_USERNAME], config[CONF_PASSWORD]
-        ssl = True
+        ssl = False
 
         self.ca_cert_bundle = os.path.join(os.path.dirname(__file__), 'ca-bundle-kpn-pkio-g3-server.pem')
 
