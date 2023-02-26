@@ -188,6 +188,7 @@ class ExperiaBoxV10ADeviceScanner(DeviceScanner):
             result = data_search.group(1).split('\n,')
         except requests.exceptions.Timeout:
             _LOGGER.error('Could not fetch cgi_clients, a timeout occurred.')
+            session.close()
 
         # log out using the token we stored earlier
         logout_payload = {
@@ -196,7 +197,10 @@ class ExperiaBoxV10ADeviceScanner(DeviceScanner):
 
         logout_url = '{}/logout.cgi'.format(self.base_url)
         log_out_page = session.post(logout_url, data = logout_payload, timeout = 10, verify=False, headers = {'referer': '{}/index.htm'.format(self.base_url)})
-
+        
+        #klaar met de sessie, netjes afsluiten
+        session.close()
+        
         now = dt_util.now()
 
         # start with an empty list, we will add all the devices we see
